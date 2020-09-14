@@ -1,8 +1,8 @@
 package linerList.polynomialExample;
 
 public class Term {
-    private int coe;
-    private int exp;
+    private int coe;//多项式系数
+    private int exp;//指数
 
     public Term(int coe, int exp) {
         this.coe = coe;

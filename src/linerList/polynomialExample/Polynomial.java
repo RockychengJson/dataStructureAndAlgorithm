@@ -1,7 +1,7 @@
 package linerList.polynomialExample;
 
 public class Polynomial {
-    private Term[] termArray;
+    private Term[] termArray; //用来保存（系数，指数）的数组
 
     public Polynomial(String polyStr) {
         setTermArray(polyStr);

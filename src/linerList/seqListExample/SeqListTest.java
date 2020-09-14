@@ -1,4 +1,4 @@
-package linerList;
+package linerList.seqListExample;
 
 public class SeqListTest {
     public static void main(String[] args) throws Exception {

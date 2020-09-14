@@ -1,4 +1,6 @@
-package linerList;
+package linerList.seqListExample;
+
+import linerList.LinearList;
 
 import java.util.Arrays;
 
@@ -10,7 +12,7 @@ import java.util.Arrays;
 public class SeqList<T> implements LinearList<T> {
     private final static int DEFAULT_SIZE = 4; //顺序表默认长度
 
-    private Object[] elements; //定义一个数组用于保存顺序表
+    private Object[] elements; //定义一个数组用于保存线性表
 
     private int capacity; //顺序表容量，长度
 
@@ -78,21 +80,24 @@ public class SeqList<T> implements LinearList<T> {
     }
 
     /**
-     * 往顺序表index位置插入元素x
+     * 往顺序表第index位置插入元素x
      *
      * @param index
      * @param x
-     * @throws Exception
      */
     @Override
-    public void insert(int index, T x) throws Exception {
+    public void insert(int index, T x) {
         if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("数组越界异常:" + index);
+            System.out.println("数组越界异常:" + index);
+            return;
         }
-        ensureCapacity(size + 1);
+        //ensureCapacity(size + 1);
         //把index以后的元素都后移一位
-        System.arraycopy(elements, index, elements, index + 1, size - index);
-        elements[index] = x;
+        //System.arraycopy(elements, index, elements, index + 1, size - index);
+        for (int i = size - 1; i >= index - 1; i--) {
+            elements[i + 1] = elements[i];
+        }
+        elements[index - 1] = x;
         size++;
     }
 
@@ -100,16 +105,22 @@ public class SeqList<T> implements LinearList<T> {
      * 删除顺序表index位置的元素
      *
      * @param index
-     * @throws Exception
      */
     @Override
-    public void delete(int index) throws Exception {
+    public T delete(int index) {
         if (index < 0 || index > size - 1) {
-            throw new IndexOutOfBoundsException("数组越界异常:" + index);
+            System.out.println("数组越界异常:" + index);
+            return null;
+            //throw new IndexOutOfBoundsException("数组越界异常:" + index);
         }
-        System.arraycopy(elements, index + 1, elements, index, size - index - 1);
-        elements[size] = null;
+        //System.arraycopy(elements, index + 1, elements, index, size - index - 1);
+        Object deletedElement = elements[index - 1];
+        for (int i = index; i <= size - 1; i++) {
+            elements[i - 1] = elements[i];
+        }
+        elements[size] = null; //也可以不要
         size--;
+        return (T) deletedElement;
     }
 
     /**
@@ -118,7 +129,7 @@ public class SeqList<T> implements LinearList<T> {
      * @param value
      */
     @Override
-    public void remove(T value) throws Exception {
+    public void remove(T value) {
         int index = indexOf(value);
         delete(index);
     }
@@ -161,5 +172,15 @@ public class SeqList<T> implements LinearList<T> {
             capacity *= 2;
             elements = Arrays.copyOf(elements, capacity);
         }
+    }
+
+    @Override
+    public T getPre(T value) {
+        return null;
+    }
+
+    @Override
+    public T getNext(T value) {
+        return null;
     }
 }
