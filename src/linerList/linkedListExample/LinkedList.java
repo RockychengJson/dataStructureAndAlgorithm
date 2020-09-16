@@ -5,10 +5,13 @@ package linerList.linkedListExample;
  *
  * @param <T>
  */
-public class LinkedList<T> {
+public class LinkedList<T extends Comparable<T>> {
     private LNode<T> head;
 
 
+    /**
+     * 初始化只包含头结点的单链表
+     */
     public LinkedList() {
         this.head = new LNode<T>();
     }
@@ -83,10 +86,10 @@ public class LinkedList<T> {
      * @param x
      */
     public void insert(T x) {
-        LNode<T> LNode = new LNode<>();
-        LNode.value = x;
-        LNode.next = head.next;
-        head.next = LNode;
+        LNode<T> newNode = new LNode<>();
+        newNode.value = x;
+        newNode.next = head.next;
+        head.next = newNode;
     }
 
     /**
@@ -217,5 +220,56 @@ public class LinkedList<T> {
         return p;
     }
 
+    /**
+     * 单链表反向
+     * 思想：将单链表中的结点按照头插法挨个插入新的单链表中
+     *
+     * @return 新单链表的头结点
+     */
+    public LNode reverse() {
+        if (head.next == null || head.next.next == null)
+            return head;
+        LNode s = head, newHead = head.next, p;
+        while (newHead != null) {
+            p = newHead;
+            newHead = newHead.next;
+            p.next = s.next;
+            s.next = p;
+        }
+        return s;
+    }
+
+    /**
+     * 带头结点的有序单链表的合并
+     * 从小到大排列
+     *
+     * @param headA
+     * @param headB
+     * @return 新单链表的头结点
+     */
+//    public LNode merge(LNode headA, LNode headB) {
+//        LNode head = new LNode();
+//        LNode p = head;
+//        headA = headA.next;
+//        headB = headB.next;
+//        while (headA != null && headB != null) {
+//            LNode newNode = new LNode();
+//            if (headA.value.compareTo(headB.value) < 0) {
+//                newNode.value = headA.value;
+//                headA = headA.next;
+//            } else {
+//                newNode.value = headB.value;
+//                headB = headB.next;
+//            }
+//            newNode.next = p.next;
+//            p.next = newNode;
+//        }
+//        while(headA != null){
+//            LNode newNode = new LNode();
+//            newNode.value = headA.value;
+//            headA = headA.next;
+//
+//        }
+//    }
 
 }

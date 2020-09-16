@@ -209,4 +209,16 @@ public class SeqList<T> implements LinearList<T> {
         }
         return null;
     }
+
+    /**
+     * 将顺序表反向
+     */
+    public void reverse() {
+        Object temp;
+        for (int i = 0; i <= size / 2; i++) {
+            temp = elements[i];
+            elements[i] = elements[size - 1 - i];
+            elements[size - 1 - i] = temp;
+        }
+    }
 }

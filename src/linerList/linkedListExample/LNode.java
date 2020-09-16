@@ -1,6 +1,6 @@
 package linerList.linkedListExample;
 
-public class LNode<T> {
+public class LNode<T extends Comparable<T>> {
     T value;
     LNode<T> next;
 
