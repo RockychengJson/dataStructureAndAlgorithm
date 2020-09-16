@@ -87,17 +87,23 @@ public class SeqList<T> implements LinearList<T> {
      */
     @Override
     public void insert(int index, T x) {
-        if (index < 0 || index > size) {
-            System.out.println("数组越界异常:" + index);
+        //ensureCapacity(size + 1);
+        if (size == capacity) {
+            System.out.println("数组已满，无法插入");
             return;
         }
-        //ensureCapacity(size + 1);
+
+        if (index < 0 || index > size - 1) {
+            System.out.println("插入位置不合法:" + index);
+            return;
+        }
+
         //把index以后的元素都后移一位
         //System.arraycopy(elements, index, elements, index + 1, size - index);
-        for (int i = size - 1; i >= index - 1; i--) {
+        for (int i = size - 1; i >= index; i--) {
             elements[i + 1] = elements[i];
         }
-        elements[index - 1] = x;
+        elements[index] = x;
         size++;
     }
 
@@ -174,13 +180,33 @@ public class SeqList<T> implements LinearList<T> {
         }
     }
 
+    /**
+     * 查找顺序表中值为value的前一个元素的值
+     *
+     * @param value
+     * @return
+     */
     @Override
     public T getPre(T value) {
+        int index = indexOf(value);
+        if (index != -1 && index != 0) {
+            return (T) elements[index - 1];
+        }
         return null;
     }
 
+    /**
+     * 查找顺序表中值为value的后一个元素的值
+     *
+     * @param value
+     * @return
+     */
     @Override
     public T getNext(T value) {
+        int index = indexOf(value);
+        if (index != -1 && index != size - 1) {
+            return (T) elements[index + 1];
+        }
         return null;
     }
 }
