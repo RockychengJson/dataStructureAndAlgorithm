@@ -10,7 +10,7 @@ import java.util.Arrays;
  * @param <T>
  */
 public class SeqList<T> implements LinearList<T> {
-    private final static int DEFAULT_SIZE = 4; //顺序表默认长度
+    private final static int DEFAULT_SIZE = 8; //顺序表默认长度
 
     private Object[] elements; //定义一个数组用于保存线性表
 
@@ -60,6 +60,8 @@ public class SeqList<T> implements LinearList<T> {
     }
 
     /**
+     * 求顺序表的长度
+     *
      * @return 顺序表包含元素个数
      */
     @Override
@@ -93,7 +95,7 @@ public class SeqList<T> implements LinearList<T> {
             return;
         }
 
-        if (index < 0 || index > size - 1) {
+        if (index < 0 || index > size) {
             System.out.println("插入位置不合法:" + index);
             return;
         }
@@ -115,13 +117,13 @@ public class SeqList<T> implements LinearList<T> {
     @Override
     public T delete(int index) {
         if (index < 0 || index > size - 1) {
-            System.out.println("数组越界异常:" + index);
+            System.out.println("删除位置非法:" + index);
             return null;
             //throw new IndexOutOfBoundsException("数组越界异常:" + index);
         }
         //System.arraycopy(elements, index + 1, elements, index, size - index - 1);
-        Object deletedElement = elements[index - 1];
-        for (int i = index; i <= size - 1; i++) {
+        Object deletedElement = elements[index];
+        for (int i = index + 1; i <= size - 1; i++) {
             elements[i - 1] = elements[i];
         }
         elements[size] = null; //也可以不要
@@ -149,8 +151,8 @@ public class SeqList<T> implements LinearList<T> {
      */
     @Override
     public int indexOf(T x) {
-        for (int i = 0; i < size; i++) {
-            if (x.equals(elements[i]))
+        for (int i = 0; i <= size - 1; i++) {
+            if (elements[i].equals(x))
                 return i;
         }
         return -1;
@@ -221,4 +223,10 @@ public class SeqList<T> implements LinearList<T> {
             elements[size - 1 - i] = temp;
         }
     }
+
+//    for (int i = 0; i < size; i++) {
+//        if (x.equals(elements[i]))
+//            return i;
+//    }
+//        return -1;
 }
