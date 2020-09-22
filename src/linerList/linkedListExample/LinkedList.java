@@ -2,18 +2,16 @@ package linerList.linkedListExample;
 
 /**
  * 带头结点的单链表
- *
- * @param <T>
  */
-public class LinkedList<T extends Comparable<T>> {
-    private LNode<T> head;
+public class LinkedList {
+    private LNode head;
 
 
     /**
      * 初始化只包含头结点的单链表
      */
     public LinkedList() {
-        this.head = new LNode<T>();
+        this.head = new LNode();
     }
 
     /**
@@ -21,7 +19,7 @@ public class LinkedList<T extends Comparable<T>> {
      *
      * @param array
      */
-    public LinkedList(T[] array) {
+    public LinkedList(int[] array) {
         this();
         for (int i = 0; i < array.length; i++) {
             LNode newNode = new LNode(array[i]);
@@ -36,7 +34,7 @@ public class LinkedList<T extends Comparable<T>> {
      * @param array
      * @param flag
      */
-    public LinkedList(T[] array, int flag) {
+    public LinkedList(int[] array, int flag) {
         this();
         LNode p = new LNode();
         p = head;
@@ -71,7 +69,7 @@ public class LinkedList<T extends Comparable<T>> {
      * @return
      */
     public int length() {
-        LNode<T> p = head.next;
+        LNode p = head.next;
         int length = 0;
         while (p != null) {
             length++;
@@ -85,8 +83,8 @@ public class LinkedList<T extends Comparable<T>> {
      *
      * @param x
      */
-    public void insert(T x) {
-        LNode<T> newNode = new LNode<>();
+    public void insert(int x) {
+        LNode newNode = new LNode();
         newNode.value = x;
         newNode.next = head.next;
         head.next = newNode;
@@ -99,19 +97,19 @@ public class LinkedList<T extends Comparable<T>> {
      * @param x
      * @return
      */
-    public int insertAt(int i, T x) {
+    public int insertAt(int i, int x) {
         if (i < 1) {
             System.out.println("illegal position!");
             return -1;
         }
         int j = 0;
-        LNode<T> p = head;
+        LNode p = head;
         while (p != null && j < i - 1) {
             p = p.next;
             j++;
         }
         if (p != null) {
-            LNode<T> newNode = new LNode<>(x);
+            LNode newNode = new LNode(x);
             newNode.next = p.next;
             p.next = newNode;
             return 1;
@@ -141,8 +139,8 @@ public class LinkedList<T extends Comparable<T>> {
      * @return
      * @throws Exception
      */
-    public boolean removeByValue(T value) {
-        LNode<T> p = head;
+    public boolean removeByValue(int value) {
+        LNode p = head;
         boolean flag = false;
         while (p.next != null) {
             if (p.next.value == value) {
@@ -163,8 +161,8 @@ public class LinkedList<T extends Comparable<T>> {
      * @param value
      * @return
      */
-    public LNode<T> find(T value) {
-        LNode<T> p = head.next;
+    public LNode find(int value) {
+        LNode p = head.next;
         while (p != null && p.value != value) {
             p = p.next;
         }
@@ -195,7 +193,7 @@ public class LinkedList<T extends Comparable<T>> {
      * 打印出所有的链表元素
      */
     public void display() {
-        LNode<T> p = head;
+        LNode p = head;
         System.out.println("Print out the elements of the linked list");
         while (p.next != null) {
             System.out.print(p.next);
@@ -211,7 +209,7 @@ public class LinkedList<T extends Comparable<T>> {
      * @param x
      * @return
      */
-    public LNode get(T x) {
+    public LNode search(int x) {
         LNode p = head.next;
         while (p != head && x != p.value) //循环扫描查找，直到p 指向头结点h 或找到x结束
             p = p.next;
