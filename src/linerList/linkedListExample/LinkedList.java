@@ -20,7 +20,7 @@ public class LinkedList {
      * @param array
      */
     public LinkedList(int[] array) {
-        this();
+        this.head = new LNode();
         for (int i = 0; i < array.length; i++) {
             LNode newNode = new LNode(array[i]);
             newNode.next = head.next;
@@ -35,14 +35,13 @@ public class LinkedList {
      * @param flag
      */
     public LinkedList(int[] array, int flag) {
-        this();
-        LNode p = new LNode();
-        p = head;
+        this.head = new LNode();
+        LNode tail = head;
         for (int i = 0; i < array.length; i++) {
             LNode newNode = new LNode(array[i]);
             newNode.next = null;
-            p.next = newNode;
-            p = newNode;
+            tail.next = newNode;
+            tail = newNode;
         }
     }
 
@@ -70,12 +69,12 @@ public class LinkedList {
      */
     public int length() {
         LNode p = head.next;
-        int length = 0;
+        int count = 0;
         while (p != null) {
-            length++;
+            count++;
             p = p.next;
         }
-        return length;
+        return count;
     }
 
     /**
@@ -97,24 +96,26 @@ public class LinkedList {
      * @param x
      * @return
      */
-    public int insertAt(int i, int x) {
+    public boolean insertAt(int i, int x) {
         if (i < 1) {
             System.out.println("illegal position!");
-            return -1;
+            return false;
         }
+        //查找第i-1个节点
         int j = 0;
         LNode p = head;
         while (p != null && j < i - 1) {
             p = p.next;
             j++;
         }
+        //插入值为X的新结点
         if (p != null) {
             LNode newNode = new LNode(x);
             newNode.next = p.next;
             p.next = newNode;
-            return 1;
+            return true;
         } else {
-            return -1;
+            return false;
         }
     }
 
@@ -124,11 +125,8 @@ public class LinkedList {
      * @param p
      */
     public void remove(LNode p) { //删除p的后继结点
-        LNode q;
         if (p.next != null) {
-            q = p.next;          //q为p的直接后继
-            p.next = q.next;   //删除q
-            q = null;        //释放q结点空间
+            p.next = p.next.next;
         }
     }
 
@@ -156,21 +154,24 @@ public class LinkedList {
 
 
     /**
-     * 查找值为value的结点
+     * 查找链表中是否存在值为value的结点
      *
      * @param value
      * @return
      */
-    public LNode find(int value) {
+    public boolean isExisted(int value) {
         LNode p = head.next;
         while (p != null && p.value != value) {
             p = p.next;
         }
-        return p;
+        if (p == null) {
+            return false;
+        }
+        return true;
     }
 
     /**
-     * 读取单链表中的第i个元素
+     * 读取单链表中的第i个结点
      *
      * @param i
      * @return
@@ -190,18 +191,15 @@ public class LinkedList {
 
 
     /**
-     * 打印出所有的链表元素
+     * 打印出单链表的所有结点
      */
-    public void display() {
-        LNode p = head;
-        System.out.println("Print out the elements of the linked list");
-        while (p.next != null) {
-            System.out.print(p.next);
+    public void show() {
+        LNode p = head.next;
+        while (p != null) {
+            System.out.print(" " + p.value);
             p = p.next;
         }
-        System.out.println();
     }
-
 
     /**
      * 单循环链表中查找算法：
@@ -221,20 +219,19 @@ public class LinkedList {
     /**
      * 单链表反向
      * 思想：将单链表中的结点按照头插法挨个插入新的单链表中
-     *
-     * @return 新单链表的头结点
      */
-    public LNode reverse() {
+    public void reverse() {
         if (head.next == null || head.next.next == null)
-            return head;
-        LNode s = head, newHead = head.next, p;
-        while (newHead != null) {
-            p = newHead;
-            newHead = newHead.next;
-            p.next = s.next;
-            s.next = p;
+            return;
+        LNode tempHead = head.next;
+        LNode p;
+        head.next = null;
+        while (tempHead != null) {
+            p = tempHead;
+            tempHead = tempHead.next;
+            p.next = head.next;
+            head.next = p;
         }
-        return s;
     }
 
     /**

@@ -12,11 +12,11 @@ import java.util.Arrays;
 public class SeqList<T> implements LinearList<T> {
     private final static int DEFAULT_SIZE = 8; //顺序表默认长度
 
-    private Object[] elements; //定义一个数组用于保存线性表
-
     private int capacity; //顺序表容量，长度
 
-    private int size; //当前顺序表中元素个数
+    private Object[] elements; //定义一个数组用于保存线性表
+
+    private int n; //当前顺序表中元素个数
 
     /**
      * 以默认长度初始化顺序表
@@ -24,6 +24,7 @@ public class SeqList<T> implements LinearList<T> {
     public SeqList() {
         capacity = DEFAULT_SIZE;
         elements = new Object[capacity];
+        n = 0;
     }
 
     /**
@@ -46,7 +47,7 @@ public class SeqList<T> implements LinearList<T> {
     @Override
     public void clear() {
         Arrays.fill(elements, null);
-        size = 0;
+        n = 0;
     }
 
     /**
@@ -56,7 +57,8 @@ public class SeqList<T> implements LinearList<T> {
      */
     @Override
     public boolean isEmpty() {
-        return size == 0;
+
+        return n == 0;
     }
 
     /**
@@ -66,7 +68,7 @@ public class SeqList<T> implements LinearList<T> {
      */
     @Override
     public int length() {
-        return size;
+        return n;
     }
 
     /**
@@ -75,7 +77,7 @@ public class SeqList<T> implements LinearList<T> {
      */
     @Override
     public T get(int index) {
-        if (index < 0 || index > size - 1) {
+        if (index < 0 || index > n - 1) {
             throw new IndexOutOfBoundsException("数组越界异常:" + index);
         }
         return (T) elements[index];
@@ -90,23 +92,23 @@ public class SeqList<T> implements LinearList<T> {
     @Override
     public void insert(int index, T x) {
         //ensureCapacity(size + 1);
-        if (size == capacity) {
+        if (n == capacity) {
             System.out.println("数组已满，无法插入");
             return;
         }
 
-        if (index < 0 || index > size) {
+        if (index < 0 || index > n) {
             System.out.println("插入位置不合法:" + index);
             return;
         }
 
         //把index以后的元素都后移一位
         //System.arraycopy(elements, index, elements, index + 1, size - index);
-        for (int i = size - 1; i >= index; i--) {
+        for (int i = n - 1; i >= index; i--) {
             elements[i + 1] = elements[i];
         }
         elements[index] = x;
-        size++;
+        n++;
     }
 
     /**
@@ -116,18 +118,18 @@ public class SeqList<T> implements LinearList<T> {
      */
     @Override
     public T delete(int index) {
-        if (index < 0 || index > size - 1) {
+        if (index < 0 || index > n - 1) {
             System.out.println("删除位置非法:" + index);
             return null;
             //throw new IndexOutOfBoundsException("数组越界异常:" + index);
         }
         //System.arraycopy(elements, index + 1, elements, index, size - index - 1);
         Object deletedElement = elements[index];
-        for (int i = index + 1; i <= size - 1; i++) {
+        for (int i = index + 1; i <= n - 1; i++) {
             elements[i - 1] = elements[i];
         }
-        elements[size] = null; //也可以不要
-        size--;
+        elements[n - 1] = null; //也可以不要
+        n--;
         return (T) deletedElement;
     }
 
@@ -151,9 +153,10 @@ public class SeqList<T> implements LinearList<T> {
      */
     @Override
     public int indexOf(T x) {
-        for (int i = 0; i <= size - 1; i++) {
-            if (elements[i].equals(x))
+        for (int i = 0; i < n - 1; i++) {
+            if (elements[i] == x) {
                 return i;
+            }
         }
         return -1;
     }
@@ -163,7 +166,7 @@ public class SeqList<T> implements LinearList<T> {
      */
     @Override
     public void display() {
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < n; i++) {
             System.out.print(elements[i] + " ");
         }
         System.out.println();
@@ -206,7 +209,7 @@ public class SeqList<T> implements LinearList<T> {
     @Override
     public T getNext(T value) {
         int index = indexOf(value);
-        if (index != -1 && index != size - 1) {
+        if (index != -1 && index != n - 1) {
             return (T) elements[index + 1];
         }
         return null;
@@ -217,16 +220,10 @@ public class SeqList<T> implements LinearList<T> {
      */
     public void reverse() {
         Object temp;
-        for (int i = 0; i <= size / 2; i++) {
+        for (int i = 0; i <= n / 2; i++) {
             temp = elements[i];
-            elements[i] = elements[size - 1 - i];
-            elements[size - 1 - i] = temp;
+            elements[i] = elements[n - 1 - i];
+            elements[n - 1 - i] = temp;
         }
     }
-
-//    for (int i = 0; i < size; i++) {
-//        if (x.equals(elements[i]))
-//            return i;
-//    }
-//        return -1;
 }

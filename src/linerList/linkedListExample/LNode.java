@@ -1,13 +1,16 @@
 package linerList.linkedListExample;
 
-public class LNode<T extends Comparable<T>> {
-    T value;
-    LNode<T> next;
+/**
+ * 定义单链表结点
+ */
+public class LNode {
+    int value;
+    LNode next;
 
     LNode() {
     }
 
-    LNode(T value) {
+    LNode(int value) {
         this.value = value;
     }
 }

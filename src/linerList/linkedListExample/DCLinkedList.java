@@ -3,8 +3,8 @@ package linerList.linkedListExample;
 /**
  * 双向循环链表的实现
  */
-public class DCLinkedList<T> {
-    private DNode<T> head;
+public class DCLinkedList {
+    private DNode head;
 
 
     /**
@@ -14,7 +14,7 @@ public class DCLinkedList<T> {
      * @param value
      * @return
      */
-    public int insert(int index, T value) {
+    public int insert(int index, int value) {
         DNode p = head.next;
         int j = 1;
         //查找第index个元素,直到p指向头结点h或p指向第i个元素结束
@@ -40,9 +40,9 @@ public class DCLinkedList<T> {
      * 删除第i个结点p
      *
      * @param i
-     * @return  被删除的结点的值
+     * @return 被删除的结点的值
      */
-    public T delete(int i) {
+    public int delete(int i) {
         DNode p = head.next;
         int j = 1;
         while (p != head && j < i) {      //在双向链表中依次查找第i个元素
@@ -50,13 +50,13 @@ public class DCLinkedList<T> {
             p = p.next;
         }
         if (j == i) {
-            T value = (T) p.value;
+            int value = p.value;
             p.prior.next = p.next;      //删除结点p
             p.next.prior = p.prior;
             p = null;          //释放p结点空间
             return value;
         } else
-            return null;
+            return -1;
     }
 
 
