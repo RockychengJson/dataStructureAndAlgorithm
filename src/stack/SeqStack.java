@@ -3,22 +3,20 @@ package stack;
 public class SeqStack implements StackIntf {
     final int maxSize = 100;
     int[] element = new int[maxSize];
-    int top; //指明栈顶
+    int top; //指明栈顶指针
 
-    public SeqStack() {
-    }
-
-    /**
-     * 顺序栈上实现进栈操作
-     *
-     * @param x
-     */
+    //入栈操作
     public void push(int x) {
         // 若栈s未满，将元素x压入栈中；否则，栈的状态不变并给出出错信息
         if (top == maxSize)
             System.out.println("Overflow");
-        else
-            element[top++] = x;     //x进栈
+        else {
+            element[top] = x;//x进栈
+            top++;
+        }
+    }
+
+    public SeqStack() {
     }
 
 
@@ -28,9 +26,9 @@ public class SeqStack implements StackIntf {
      * @return
      */
     public int pop() {
-        // 若栈不空，则删去栈顶元素并返回元素值，否则返回空元素NULL
+        // 若栈不空，则删去栈顶元素并返回元素值，否则返回空元素-1
         if (top == 0)
-            return 0;
+            return -1;
         else {
             top--;           //栈顶指针减1
             return element[top];   //返回原栈顶元素值
@@ -72,9 +70,12 @@ public class SeqStack implements StackIntf {
      * @return
      */
     public boolean isEmpty() {
-        if (top > 0)
-            return false;
-        else
-            return true;
+        return top > 0 ? false : true;
+    }
+
+    public void printStack() {
+        while (!isEmpty()) {
+            System.out.print(pop() + " ");
+        }
     }
 }

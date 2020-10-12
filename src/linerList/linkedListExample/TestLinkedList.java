@@ -45,15 +45,17 @@ public class TestLinkedList {
      * 顺序表的逆置
      *
      * @param array
-     * @param n
      */
-    void inverse(int[] array, int n) {
+    int[] inverse(int[] array, int n) {
         int temp;
         for (int i = 0; i <= (n - 1) / 2; i++) {
             temp = array[i];
             array[i] = array[n - 1 - i];
             array[n - 1 - i] = temp;
         }
+        return array;
     }
 
 }
+
+
